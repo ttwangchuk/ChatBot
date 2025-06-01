@@ -17,9 +17,9 @@ chatToggle.addEventListener("click", () => {
       <div class="text-left my-1">
         <span class="bg-gray-100 p-2 rounded-md inline-block">
           <strong>Here are some FAQs you can try:</strong><br>
-          • What programs are offered?<br>
-          • How to apply for admission?<br>
-          • What are the fees?
+          • What programs are offered<br>
+          • How to apply for admission<br>
+          • What is the fee structure
         </span>
       </div>`;
     chatbox.scrollTop = chatbox.scrollHeight;

@@ -93,9 +93,9 @@
 
   // Show FAQs as buttons
   const faqList = [
-    "What programs are offered?",
-    "How to apply for admission?",
-    "What are the fees?"
+    "What programs are offered",
+    "How to apply for admission",
+    "What is the fee structure"
   ];
 
   function showFAQButtons() {
@@ -109,7 +109,7 @@
     faqList.forEach(q => {
       faqHTML += `
         <button class="faq-btn text-left bg-green-200 px-3 py-1 rounded hover:bg-green-300 transition" data-question="${q}">
-          ❓ ${q}
+          ${q}
         </button>`;
     });
 

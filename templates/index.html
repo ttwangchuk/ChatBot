@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sherubtse College</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-green-200 text-blue-900 p-4 shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="static/Images/sherubtse logo.png" alt="Sherubtse Logo" class="w-12 h-12">
+        <h1 class="text-xl md:text-2xl font-bold">Sherubtse College</h1>
+      </div>
+      <nav class="space-x-4 text-sm md:text-base">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">About</a>
+        <a href="#" class="hover:underline">Academics</a>
+        <a href="#" class="hover:underline">Admissions</a>
+        <a href="#" class="hover:underline">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-green-100 py-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-semibold mb-4 text-blue-900">Welcome to Sherubtse College</h2>
+      <p class="text-lg text-gray-700 mb-6">Premier institute for higher learning in Bhutan.</p>
+      <a href="#" class="inline-block bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-800">Explore Programs</a>
+    </div>
+  </section>
+
+  <!-- Information Cards -->
+  <section class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+      <div class="bg-green-100 p-6 rounded shadow">
+        <h3 class="text-xl font-semibold mb-2 text-blue-900">Our Vision</h3>
+        <p>To be a center of excellence in higher education committed to teaching, research, and community service.</p>
+      </div>
+      <div class="bg-green-100 p-6 rounded shadow">
+        <h3 class="text-xl font-semibold mb-2 text-blue-900">Academic Programs</h3>
+        <p>Offering undergraduate programs in arts, science, and business studies, designed to prepare students for leadership.</p>
+      </div>
+      <div class="bg-green-100 p-6 rounded shadow">
+        <h3 class="text-xl font-semibold mb-2 text-blue-900">Campus Life</h3>
+        <p>Experience a vibrant campus with cultural events, clubs, and access to modern learning facilities.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-200 text-center p-4 text-sm text-blue-900">
+    © 2025 Sherubtse College. All rights reserved.
+  </footer>
+
+  <!-- Chatbot Floating Button -->
+  <button id="chat-toggle" class="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-400 z-50">
+    💬
+  </button>
+
+  <!-- Chatbot Popup Window -->
+  <div id="chatbox-container" class="fixed bottom-20 right-6 w-80 bg-white border border-gray-300 rounded-xl shadow-lg hidden flex flex-col z-50">
+    <div class="bg-blue-500 text-white p-3 rounded-t-xl font-semibold">
+      Sherubtse ChatBot
+    </div>
+    <div id="chatbox" class="flex-1 p-3 overflow-y-auto h-64 bg-green-50 text-sm">
+      <!-- Messages will appear here -->
+    </div>
+    <div class="flex border-t p-2">
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Type a message..."
+        class="flex-1 p-2 text-sm border border-gray-300 rounded-l-md focus:outline-none"
+      />
+      <button id="send-button" class="bg-blue-500 text-white px-4 text-sm rounded-r-md hover:bg-blue-400">
+        Send
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+  const chatToggle = document.getElementById("chat-toggle");
+  const chatboxContainer = document.getElementById("chatbox-container");
+  const chatbox = document.getElementById("chatbox");
+  const userInput = document.getElementById("user-input");
+  const sendButton = document.getElementById("send-button");
+
+  // Show FAQs as buttons
+  const faqList = [
+    "What programs are offered?",
+    "How to apply for admission?",
+    "What are the fees?"
+  ];
+
+  function showFAQButtons() {
+    let faqHTML = `
+      <div class="text-left my-1">
+        <span class="bg-gray-100 p-2 rounded-md inline-block">
+          <strong>Here are some FAQs you can try:</strong>
+        </span>
+        <div class="mt-2 flex flex-col gap-2">`;
+
+    faqList.forEach(q => {
+      faqHTML += `
+        <button class="faq-btn text-left bg-green-200 px-3 py-1 rounded hover:bg-green-300 transition" data-question="${q}">
+          ❓ ${q}
+        </button>`;
+    });
+
+    faqHTML += `</div></div>`;
+    chatbox.innerHTML += faqHTML;
+    chatbox.scrollTop = chatbox.scrollHeight;
+
+    // Attach click listeners to the FAQ buttons
+    document.querySelectorAll(".faq-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        userInput.value = button.dataset.question;
+        sendMessage();
+      });
+    });
+  }
+
+  // Toggle chatbot and show FAQs
+  chatToggle.addEventListener("click", () => {
+    chatboxContainer.classList.toggle("hidden");
+
+    if (!chatboxContainer.classList.contains("hidden")) {
+      chatbox.innerHTML = ""; // optional: clear old messages
+      showFAQButtons();
+    }
+  });
+
+  // Send message to backend
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    // Show user message
+    chatbox.innerHTML += `
+      <div class="text-right my-1">
+        <span class="bg-green-100 p-2 rounded-md inline-block">${message}</span>
+      </div>`;
+    userInput.value = "";
+    chatbox.scrollTop = chatbox.scrollHeight;
+
+    try {
+      const response = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+
+      const data = await response.json();
+      chatbox.innerHTML += `
+        <div class="text-left my-1">
+          <span class="bg-gray-200 p-2 rounded-md inline-block">${data.response}</span>
+        </div>`;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    } catch (error) {
+      chatbox.innerHTML += `
+        <div class="text-left my-1 text-red-500">
+          Error: Could not reach server.
+        </div>`;
+    }
+  }
+
+  sendButton.addEventListener("click", sendMessage);
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>
+
+
+</body>
+</html>
